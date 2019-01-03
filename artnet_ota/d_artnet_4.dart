@@ -1886,8 +1886,21 @@ class ArtnetFirmwareMasterPacket implements ArtnetPacket{
   int get firmwareLength0 => this.packet.getUint8(firmwareLength0Index);
   set firmwareLength0(int value) => this.packet.setUint8(firmwareLength0Index, value);
 
-  int get firmwareLength => this.packet.getUint64(firmwareLength3Index);
-  set firmwareLength(int value) => this.packet.setUint64(firmwareLength3Index, value);
+  int get firmwareLength{
+    int value = 0;
+    value |= this.firmwareLength3 << 24;
+    value |= this.firmwareLength2 << 16;  
+    value |= this.firmwareLength1 << 8;  
+    value |= this.firmwareLength0;  
+    return value;  
+  }
+  set firmwareLength(int value){
+    print(value);
+    this.firmwareLength3 = (value & 0xFF000000) >> 24;
+    this.firmwareLength2 = (value & 0x00FF0000) >> 16;
+    this.firmwareLength1 = (value & 0x0000FF00) >> 8;
+    this.firmwareLength0 = value & 0x000000FF;
+  }
 
   List<int> get data => this.packet.buffer.asUint16List(dataIndex, dataSize);
   set data(List<int> value){
