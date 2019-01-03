@@ -1,0 +1,44 @@
+In archive /home/penguin/Documents/Blizzard/Product_Fixes/pwm_tester/build/main/libmain.a:
+
+mcpwm_basic_config_example.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.app_main 000000c8  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .text         00000000  00000000  00000000  000000fc  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000000  00000000  00000000  000000fc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  000000fc  2**0
+                  ALLOC
+  4 .rodata.str1.4 00000056  00000000  00000000  000000fc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .text.app_main 00000288  00000000  00000000  00000154  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .rodata.app_main 000000dc  00000000  00000000  000003dc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  7 .debug_frame  00000028  00000000  00000000  000004b8  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  8 .debug_info   00000608  00000000  00000000  000004e0  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  9 .debug_abbrev 00000127  00000000  00000000  00000ae8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000015d  00000000  00000000  00000c0f  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 11 .debug_aranges 00000020  00000000  00000000  00000d6c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 12 .debug_ranges 00000010  00000000  00000000  00000d8c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 13 .debug_line   000003ba  00000000  00000000  00000d9c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 14 .debug_str    000005e0  00000000  00000000  00001156  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .comment      0000003b  00000000  00000000  00001736  2**0
+                  CONTENTS, READONLY
+ 16 .xtensa.info  00000038  00000000  00000000  00001771  2**0
+                  CONTENTS, READONLY
+ 17 .xt.lit       00000008  00000000  00000000  000017a9  2**0
+                  CONTENTS, RELOC, READONLY
+ 18 .xt.prop      0000018c  00000000  00000000  000017b1  2**0
+                  CONTENTS, RELOC, READONLY
