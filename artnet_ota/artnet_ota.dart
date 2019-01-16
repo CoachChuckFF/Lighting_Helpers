@@ -13,6 +13,7 @@ Uint16List _firmware;
 int _firmwareLastPos = 0;
 int _firmwareCurPos = 0;
 int _blockNumber = 0;
+int _dataSent = 0;
 
 void main(List<String> arguments) async {  
 
@@ -40,7 +41,7 @@ void packetCallback(Datagram gram){
       print("got poll from ${gram.address} $_validDeviceCount");
       if(++_validDeviceCount >= 3){
         _upgradeStarted = true;
-        _deviceToUpgrade = InternetAddress("192.168.1.172");
+        _deviceToUpgrade = InternetAddress("192.168.1.61");
         startOTA();
       }
       /*if(gram.address == _deviceToUpgrade){
@@ -63,18 +64,31 @@ void packetCallback(Datagram gram){
         ArtnetFirmwareMasterPacket more = ArtnetFirmwareMasterPacket();
         more.blockType = ArtnetFirmwareMasterPacket.blockTypeOptionFirmCont;
         more.firmwareLength = _firmware.length;
-        more.blockId = ++_blockNumber;
-        if(_firmwareLastPos + 512 >= _firmware.length){
+        more.blockId = _blockNumber;
+        if(_dataSent + 512 >= _firmware.length){
+          print("here!");
           more.blockType = ArtnetFirmwareMasterPacket.blockTypeOptionFirmLast;
+          more.data = _firmware.toList().sublist(_firmwareLastPos, _firmware.length - 1);
+          print(more);
           _upgradeDone = true;
-        }
-        more.data = _firmware.toList().sublist(_firmwareLastPos);
-        _firmwareCurPos = _blockNumber*512;
-        _server.sendPacket(more.udpPacket, _deviceToUpgrade);
-      
+          _server.sendPacket(more.udpPacket, _deviceToUpgrade);
+          _dataSent+=(_firmware.length - _firmwareLastPos);
+          print("Data sent: $_dataSent");
+          exit(0);
 
-        print("Sent $_firmwareCurPos of ${_firmware.length}");
-      }      
+        } else {
+          more.data = _firmware.toList().sublist(_firmwareLastPos);
+          _firmwareCurPos = (++_blockNumber)*512;
+        }
+        
+        _server.sendPacket(more.udpPacket, _deviceToUpgrade);
+        _dataSent+=512;
+
+        print("Sent $_firmwareCurPos of ${_firmware.length} block: $_blockNumber last pos: $_firmwareLastPos, data sent: $_dataSent");
+      } else if (reply.blockType == 0xFF){
+        print("ERROR");
+        exit(0);
+      }    
     }
   }
 }
@@ -93,9 +107,11 @@ void startOTA(){
   packet.firmwareLength = _firmware.length;
   packet.blockId = _blockNumber;
   packet.data = _firmware.toList();
-  _firmwareCurPos = 512;
+  _firmwareLastPos = _firmwareCurPos = 512;
+  _blockNumber++;
 
   _server.sendPacket(packet.udpPacket, _deviceToUpgrade);
+  _dataSent+=512;
 
   print(packet);
 
